@@ -16,12 +16,14 @@ interface FiltersBarProps {
 }
 
 export const FiltersBar: React.FC<FiltersBarProps> = ({ statusFilter, setStatusFilter, sortOrder, setSortOrder }) => (
-  <div className="filters-bar-root">
+  <div className="filters-bar-root" role="region" aria-label="Filter and sort leave requests">
     <FlexBox direction={FlexBoxDirection.Row} style={{ alignItems: 'center', gap: 24, paddingBottom: 8, maxWidth: 900, width: '100%' }} className="filters-bar-flex">
       <FlexBox direction={FlexBoxDirection.Row} style={{ alignItems: 'center', gap: 8 }}>
         <Icon name="filter" style={{ color: '#0a6ed1' }} />
         <span style={{ fontWeight: 500 }}>Filter by Status:</span>
         <SegmentedButton
+          aria-label="Filter leave requests by status"
+          role="listbox"
           onSelectionChange={(e) => {
             const selectedButton = e.target.querySelector('[selected]') as HTMLElement;
             if (selectedButton) {
@@ -31,7 +33,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({ statusFilter, setStatusF
           }}
         >
           {STATUS_OPTIONS.map((option) => (
-            <SegmentedButtonItem key={option.key} data-key={option.key} selected={statusFilter === option.key}>
+            <SegmentedButtonItem key={option.key} data-key={option.key} selected={statusFilter === option.key} aria-label={option.label} role="option">
               {option.label}
             </SegmentedButtonItem>
           ))}
@@ -42,6 +44,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({ statusFilter, setStatusF
         design="Emphasized"
         onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
         style={{ minWidth: 180 }}
+        aria-label={`Sort by date requested, current order: ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}
       >
         Sort by Date Requested
       </Button>

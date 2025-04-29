@@ -12,16 +12,17 @@ interface PaginationControlsProps {
 export const PaginationControls: React.FC<PaginationControlsProps> = ({ page, total, limit, loading, onPageChange }) => {
   const totalPages = Math.ceil(total / limit) || 1;
   return (
-    <FlexBox direction={FlexBoxDirection.Row} style={{ justifyContent: 'center', marginTop: 32, gap: 16, alignItems: 'center' }}>
+    <FlexBox direction={FlexBoxDirection.Row} style={{ justifyContent: 'center', marginTop: 32, gap: 16, alignItems: 'center' }} role="navigation" aria-label="Pagination Controls">
       <Button
         design="Transparent"
         icon="navigation-left-arrow"
         disabled={page === 1 || loading}
         onClick={() => onPageChange(page - 1)}
+        aria-label="Previous page"
       >
         {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Previous'}
       </Button>
-      <span style={{ fontWeight: 600, minWidth: 80, textAlign: 'center' }}>
+      <span style={{ fontWeight: 600, minWidth: 80, textAlign: 'center' }} aria-live="polite" aria-atomic="true">
         Page {page} of {totalPages}
       </span>
       <Button
@@ -29,6 +30,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({ page, to
         icon="navigation-right-arrow"
         disabled={page >= totalPages || loading}
         onClick={() => onPageChange(page + 1)}
+        aria-label="Next page"
       >
         {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Next'}
       </Button>

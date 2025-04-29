@@ -26,6 +26,8 @@ export const LeaveRequestCard: React.FC<LeaveRequestCardProps & { className?: st
       width: '100%',
       margin: '0 auto',
     }}
+    role="group"
+    aria-label={`Leave request for ${request.name}`}
   >
     <FlexBox
       direction={FlexBoxDirection.Row}
@@ -69,6 +71,7 @@ export const LeaveRequestCard: React.FC<LeaveRequestCardProps & { className?: st
             disabled={request.status === 'APPROVED'}
             onClick={() => onApprove(request.id)}
             style={{ fontWeight: 600 }}
+            aria-label={`Approve leave request for ${request.name}`}
           >
             Approve
           </Button>
@@ -78,6 +81,7 @@ export const LeaveRequestCard: React.FC<LeaveRequestCardProps & { className?: st
             disabled={request.status === 'REJECTED'}
             onClick={() => onReject(request.id)}
             style={{ fontWeight: 600 }}
+            aria-label={`Reject leave request for ${request.name}`}
           >
             Reject
           </Button>

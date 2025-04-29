@@ -92,8 +92,8 @@ export const LeaveRequestsDashboard: React.FC = () => {
 
   if (error) {
     return (
-      <FlexBox direction={FlexBoxDirection.Column} style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', background: '#f3f6fa' }}>
-        <Card style={{ padding: 40, background: '#fff', color: '#bb0000', fontWeight: 600, fontSize: 20 }}>
+      <FlexBox direction={FlexBoxDirection.Column} style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', background: '#f3f6fa' }} role="alert" aria-live="assertive">
+        <Card style={{ padding: 40, background: '#fff', color: '#bb0000', fontWeight: 600, fontSize: 20 }} aria-label="Error message">
           {error}
         </Card>
       </FlexBox>
@@ -110,8 +110,11 @@ export const LeaveRequestsDashboard: React.FC = () => {
           alignItems: 'center',
           background: '#f3f6fa'
         }}
+        role="status"
+        aria-live="polite"
+        aria-label="Loading leave requests"
       >
-        <BusyIndicator active />
+        <BusyIndicator active aria-label="Loading" />
       </FlexBox>
     );
   }
@@ -121,10 +124,12 @@ export const LeaveRequestsDashboard: React.FC = () => {
       direction={FlexBoxDirection.Column}
       className="leave-dashboard-main"
       style={{ minHeight: '100vh', background: '#f3f6fa', justifyContent: 'center', alignItems: 'center', padding: '2rem' }}
+      role="main"
+      aria-label="Leave Requests Dashboard"
     >
-      <Card style={{ maxWidth: 1440, width: '100%', padding: 0, boxShadow: '0 4px 24px #0001', background: '#fff' }}>
+      <Card style={{ maxWidth: 1440, width: '100%', padding: 0, boxShadow: '0 4px 24px #0001', background: '#fff' }} aria-label="Leave Requests Section">
         <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 24, padding: '32px 40px 0 40px' }}>
-          <Title level="H2">Leave Requests Dashboard</Title>
+          <Title level="H2" aria-label="Leave Requests Dashboard">Leave Requests Dashboard</Title>
           <div className="leave-dashboard-filters">
             <FiltersBar
               statusFilter={statusFilter}
@@ -134,9 +139,9 @@ export const LeaveRequestsDashboard: React.FC = () => {
             />
           </div>
         </FlexBox>
-        <div className="leave-dashboard-list" style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 16, padding: '0 40px 40px 40px' }}>
+        <div className="leave-dashboard-list" style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 16, padding: '0 40px 40px 40px' }} role="region" aria-label="Leave Requests List">
           {sortedRequests.map((req) => (
-            <div className="leave-dashboard-card" key={req.id}>
+            <div className="leave-dashboard-card" key={req.id} role="listitem" aria-label={`Leave request for ${req.name}`}> 
               <LeaveRequestCard
                 request={req}
                 onApprove={(id) => handleStatusChange(id, 'APPROVED')}
