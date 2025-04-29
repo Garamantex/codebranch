@@ -1,15 +1,30 @@
-# Leave Requests Dashboard
+# Leave Requests Dashboard 🗓️
 
-A modern leave request management dashboard built with **Next.js** and **SAPUI5 Web Components** (via `@ui5/webcomponents-react`).
+[![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![SAPUI5](https://img.shields.io/badge/SAPUI5-0063B1?style=flat-square&logo=sap)](https://sap.github.io/ui5-webcomponents/)
+[![Vitest](https://img.shields.io/badge/Vitest-729B1B?style=flat-square&logo=vitest)](https://vitest.dev/)
+[![Testing Library](https://img.shields.io/badge/Testing_Library-E33332?style=flat-square&logo=testing-library)](https://testing-library.com/)
 
-## Features
-- Filter, sort, and paginate leave requests
-- Approve or reject requests with a single click
-- Responsive and accessible UI (a11y)
-- Unit tested with **Vitest** and **React Testing Library**
-- API mock for demo/testing
+A modern leave request management dashboard built with **Next.js** and **SAPUI5 Web Components** (via `@ui5/webcomponents-react`). Streamline your leave request workflow with an intuitive and accessible interface.
 
-## Getting Started
+![Dashboard Preview](https://via.placeholder.com/800x400?text=Dashboard+Preview)
+
+## ✨ Features
+
+- 📋 Filter, sort, and paginate leave requests
+- ✅ Approve or reject requests with a single click
+- 📱 Responsive and accessible UI (a11y)
+- 🧪 Unit tested with **Vitest** and **React Testing Library**
+- 🔄 API mock for demo/testing
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 16.x or later
+- npm 7.x or later
+
+### Installation
 
 Install dependencies:
 ```bash
@@ -21,9 +36,9 @@ Run the development server:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the dashboard in action! 🎉
 
-## Testing
+## 🧪 Testing
 
 Run all unit tests:
 ```bash
@@ -35,25 +50,53 @@ Or use the interactive UI:
 npm run test:ui
 ```
 
-- Tests are written with [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
-- UI interaction and accessibility are covered.
+### Testing Stack
+- 🎯 [Vitest](https://vitest.dev/) - Next Generation Testing Framework
+- 🔍 [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - User-centric Testing Utilities
 
-## Project Structure
-- `src/components/` — Main React components (dashboard, cards, filters, pagination)
-- `src/pages/api/hello.ts` — Mock API for leave requests (supports pagination)
-- `src/ui5.config.ts` — SAPUI5 Web Components global configuration
+## 📁 Project Structure
 
-## Documentation
-- Each main file/component starts with a JSDoc-style header describing its purpose and usage.
-- Follow this convention for new files for clarity and maintainability.
+```
+src/
+├── components/     # Main React components
+├── pages/
+│   └── api/       # Mock API endpoints
+└── ui5.config.ts  # SAPUI5 configuration
+```
 
-## Dependencies
-- **Next.js** — React framework for SSR and routing
-- **@ui5/webcomponents-react** — SAPUI5 Web Components for React
-- **Vitest** — Unit testing
-- **@testing-library/react** — UI testing utilities
+## 📚 Documentation
 
-## Accessibility
-- The UI is built with accessibility in mind (roles, aria-labels, keyboard navigation)
-- Tests include a11y checks and user interaction
+Each component and utility is thoroughly documented following JSDoc conventions:
+
+```typescript
+/**
+ * @component ComponentName
+ * @description Brief description
+ * @param {PropType} propName - Prop description
+ */
+```
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/)
+- **UI Components**: [@ui5/webcomponents-react](https://sap.github.io/ui5-webcomponents-react/)
+- **Testing**: [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/)
+
+## ♿ Accessibility
+
+We take accessibility seriously! Our dashboard features:
+
+- 🎯 ARIA labels and roles
+- ⌨️ Full keyboard navigation
+- 📱 Responsive design
+- 🔍 High contrast support
+- ✅ Accessibility testing in our test suite
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Made with ❤️ using Next.js and SAPUI5 Web Components
 
