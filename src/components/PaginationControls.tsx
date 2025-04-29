@@ -7,6 +7,7 @@
  */
 import React from 'react';
 import { FlexBox, FlexBoxDirection, Button, Icon } from '@ui5/webcomponents-react';
+import '@/styles/leave-requests.css';
 
 interface PaginationControlsProps {
   page: number;
@@ -19,7 +20,7 @@ interface PaginationControlsProps {
 export const PaginationControls: React.FC<PaginationControlsProps> = ({ page, total, limit, loading, onPageChange }) => {
   const totalPages = Math.ceil(total / limit) || 1;
   return (
-    <FlexBox direction={FlexBoxDirection.Row} style={{ justifyContent: 'center', marginTop: 32, gap: 16, alignItems: 'center' }} role="navigation" aria-label="Pagination Controls">
+    <FlexBox direction={FlexBoxDirection.Row} className="pagination-controls" role="navigation" aria-label="Pagination Controls">
       <Button
         design="Transparent"
         icon="navigation-left-arrow"
@@ -27,9 +28,9 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({ page, to
         onClick={() => onPageChange(page - 1)}
         aria-label="Previous page"
       >
-        {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Previous'}
+        {loading ? <span><Icon name="refresh" className="loading-icon" />Loading...</span> : 'Previous'}
       </Button>
-      <span style={{ fontWeight: 600, minWidth: 80, textAlign: 'center' }} aria-live="polite" aria-atomic="true">
+      <span className="page-info" aria-live="polite" aria-atomic="true">
         Page {page} of {totalPages}
       </span>
       <Button
@@ -39,7 +40,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({ page, to
         onClick={() => onPageChange(page + 1)}
         aria-label="Next page"
       >
-        {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Next'}
+        {loading ? <span><Icon name="refresh" className="loading-icon" />Loading...</span> : 'Next'}
       </Button>
     </FlexBox>
   );

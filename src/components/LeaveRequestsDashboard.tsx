@@ -17,6 +17,7 @@ import { LeaveRequestCard } from './LeaveRequestCard';
 import { LeaveRequest } from './leave-requests.types';
 import { PaginationControls } from './PaginationControls';
 import { FiltersBar } from './FiltersBar';
+import '@/styles/leave-requests.css';
 
 const STATUS_OPTIONS = [
   { key: 'ALL', label: 'All' },
@@ -98,8 +99,8 @@ export const LeaveRequestsDashboard: React.FC = () => {
 
   if (error) {
     return (
-      <FlexBox direction={FlexBoxDirection.Column} style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', background: '#f3f6fa' }} role="alert" aria-live="assertive">
-        <Card style={{ padding: 40, background: '#fff', color: '#bb0000', fontWeight: 600, fontSize: 20 }} aria-label="Error message">
+      <FlexBox direction={FlexBoxDirection.Column} className="leave-dashboard-main" role="alert" aria-live="assertive">
+        <Card className="error-card" aria-label="Error message">
           {error}
         </Card>
       </FlexBox>
@@ -110,12 +111,7 @@ export const LeaveRequestsDashboard: React.FC = () => {
     return (
       <FlexBox
         direction={FlexBoxDirection.Column}
-        style={{
-          minHeight: '100vh',
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: '#f3f6fa'
-        }}
+        className="leave-dashboard-main"
         role="status"
         aria-live="polite"
         aria-label="Loading leave requests"
@@ -129,11 +125,10 @@ export const LeaveRequestsDashboard: React.FC = () => {
     <FlexBox
       direction={FlexBoxDirection.Column}
       className="leave-dashboard-main"
-      style={{ minHeight: '100vh', background: '#f3f6fa', justifyContent: 'center', alignItems: 'center', padding: '2rem' }}
       role="main"
       aria-label="Leave Requests Dashboard"
     >
-      <Card style={{ maxWidth: 1440, width: '100%', padding: 0, boxShadow: '0 4px 24px #0001', background: '#fff' }} aria-label="Leave Requests Section">
+      <Card className="leave-dashboard-card" aria-label="Leave Requests Section">
         <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 24, padding: '32px 40px 0 40px' }}>
           <Title level="H2" aria-label="Leave Requests Dashboard">Leave Requests Dashboard</Title>
           <div className="leave-dashboard-filters">
@@ -145,9 +140,9 @@ export const LeaveRequestsDashboard: React.FC = () => {
             />
           </div>
         </FlexBox>
-        <div className="leave-dashboard-list" style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 16, padding: '0 40px 40px 40px' }} role="region" aria-label="Leave Requests List">
+        <div className="leave-dashboard-list" role="region" aria-label="Leave Requests List">
           {sortedRequests.map((req) => (
-            <div className="leave-dashboard-card" key={req.id} role="listitem" aria-label={`Leave request for ${req.name}`}> 
+            <div className="leave-dashboard-card" key={req.id} role="listitem" aria-label={`Leave request for ${req.name}`}>
               <LeaveRequestCard
                 request={req}
                 onApprove={(id) => handleStatusChange(id, 'APPROVED')}
@@ -167,55 +162,6 @@ export const LeaveRequestsDashboard: React.FC = () => {
           </div>
         </div>
       </Card>
-      <style jsx global>{`
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@media (max-width: 900px) {
-  .leave-dashboard-card {
-    padding: 16px 4vw !important;
-    border-radius: 12px !important;
-    max-width: 98vw !important;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .leave-dashboard-main {
-    padding: 8px 0 0 0 !important;
-  }
-  .leave-dashboard-list {
-    padding: 0 2vw 16px 2vw !important;
-    gap: 12px !important;
-  }
-  .leave-dashboard-filters {
-    flex-direction: column !important;
-    gap: 8px !important;
-    align-items: stretch !important;
-    padding-bottom: 12px !important;
-    padding-left: 2vw !important;
-    padding-right: 2vw !important;
-  }
-  .leave-dashboard-filters button {
-    width: 100% !important;
-    margin-top: 4px;
-  }
-  .leave-dashboard-pagination {
-    flex-direction: column !important;
-    gap: 8px !important;
-    margin-top: 20px !important;
-  }
-  .leave-dashboard-card-content {
-    flex-direction: column !important;
-    gap: 6px !important;
-    min-width: 0 !important;
-    overflow-x: auto;
-  }
-  .leave-dashboard-card-content > div {
-    padding: 4px 0 !important;
-  }
-}
-`}</style>
     </FlexBox>
   );
 }; 

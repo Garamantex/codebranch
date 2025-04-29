@@ -1,0 +1,200 @@
+/* Leave Requests Dashboard Styles */
+
+
+/* Status Colors */
+
+.status-approved {
+    color: #107e3e;
+}
+
+.status-rejected {
+    color: #bb0000;
+}
+
+.status-pending {
+    color: #e9730c;
+}
+
+
+/* Dashboard Layout */
+
+.leave-dashboard-main {
+    min-height: 100vh;
+    background: #f3f6fa;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.leave-dashboard-card {
+    box-shadow: 0 2px 12px #0001;
+    border-radius: 16px;
+    padding: 40px 48px;
+    background: #f9fafb;
+    min-width: 0;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.leave-dashboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 16px;
+    padding: 0 40px 40px 40px;
+}
+
+
+/* Card Content */
+
+.leave-card-content {
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.card-field {
+    gap: 8px;
+    min-width: 220px;
+    padding: 8px 12px;
+}
+
+.card-label {
+    font-weight: 600;
+    color: #222;
+}
+
+.card-status {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+
+/* Filters Bar */
+
+.filters-bar-root {
+    width: 100%;
+}
+
+.filters-bar-flex {
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 8px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.filter-icon {
+    color: #0a6ed1;
+}
+
+.filter-label {
+    font-weight: 500;
+}
+
+
+/* Pagination */
+
+.pagination-controls {
+    justify-content: center;
+    margin-top: 32px;
+    gap: 16px;
+    align-items: center;
+}
+
+.page-info {
+    font-weight: 600;
+    min-width: 80px;
+    text-align: center;
+}
+
+
+/* Loading Animation */
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-icon {
+    margin-right: 4px;
+    animation: spin 1s linear infinite;
+}
+
+
+/* Error State */
+
+.error-card {
+    padding: 40px;
+    background: #fff;
+    color: #bb0000;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 900px) {
+    .leave-dashboard-card {
+        padding: 16px 4vw;
+        border-radius: 12px;
+        max-width: 98vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .leave-dashboard-main {
+        padding: 8px 0 0 0;
+    }
+    .leave-dashboard-list {
+        padding: 0 2vw 16px 2vw;
+        gap: 12px;
+    }
+    .leave-dashboard-filters {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+        padding-bottom: 12px;
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+    .leave-dashboard-filters button {
+        width: 100%;
+        margin-top: 4px;
+    }
+    .leave-dashboard-pagination {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
+    }
+    .leave-dashboard-card-content {
+        flex-direction: column;
+        gap: 6px;
+        min-width: 0;
+        overflow-x: auto;
+    }
+    .leave-dashboard-card-content>div {
+        padding: 4px 0;
+    }
+    .filters-bar-root {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .filters-bar-flex {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+        padding-bottom: 12px;
+        margin: 0 2vw;
+        max-width: 98vw;
+    }
+    .filters-bar-flex button {
+        width: 100%;
+        margin-top: 4px;
+    }
+}

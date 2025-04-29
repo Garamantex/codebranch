@@ -7,6 +7,7 @@
  */
 import React from 'react';
 import { FlexBox, FlexBoxDirection, SegmentedButton, SegmentedButtonItem, Button, Icon } from '@ui5/webcomponents-react';
+import '@/styles/leave-requests.css';
 
 const STATUS_OPTIONS = [
   { key: 'ALL', label: 'All' },
@@ -24,10 +25,10 @@ interface FiltersBarProps {
 
 export const FiltersBar: React.FC<FiltersBarProps> = ({ statusFilter, setStatusFilter, sortOrder, setSortOrder }) => (
   <div className="filters-bar-root" role="region" aria-label="Filter and sort leave requests">
-    <FlexBox direction={FlexBoxDirection.Row} style={{ alignItems: 'center', gap: 24, paddingBottom: 8, maxWidth: 900, width: '100%' }} className="filters-bar-flex">
+    <FlexBox direction={FlexBoxDirection.Row} className="filters-bar-flex">
       <FlexBox direction={FlexBoxDirection.Row} style={{ alignItems: 'center', gap: 8 }}>
-        <Icon name="filter" style={{ color: '#0a6ed1' }} />
-        <span style={{ fontWeight: 500 }}>Filter by Status:</span>
+        <Icon name="filter" className="filter-icon" />
+        <span className="filter-label">Filter by Status:</span>
         <SegmentedButton
           aria-label="Filter leave requests by status"
           role="listbox"
