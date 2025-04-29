@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Table,
-  TableRow,
-  TableCell,
-  BusyIndicator,
-  Select,
-  Option,
   FlexBox,
   FlexBoxDirection,
-  Button,
   Card,
   Title,
-  Icon
+  BusyIndicator,
 } from '@ui5/webcomponents-react';
 import { LeaveRequestCard } from './LeaveRequestCard';
 import { LeaveRequest } from './leave-requests.types';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexBox, FlexBoxDirection, Select, Option, Button, Icon } from '@ui5/webcomponents-react';
+import { FlexBox, FlexBoxDirection, SegmentedButton, SegmentedButtonItem, Button, Icon } from '@ui5/webcomponents-react';
 
 const STATUS_OPTIONS = [
   { key: 'ALL', label: 'All' },
@@ -21,15 +21,21 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({ statusFilter, setStatusF
       <FlexBox direction={FlexBoxDirection.Row} style={{ alignItems: 'center', gap: 8 }}>
         <Icon name="filter" style={{ color: '#0a6ed1' }} />
         <span style={{ fontWeight: 500 }}>Filter by Status:</span>
-        <Select
-          onChange={(e: any) => setStatusFilter(e.detail.selectedOption.value)}
-          value={statusFilter}
-          style={{ minWidth: 120 }}
+        <SegmentedButton
+          onSelectionChange={(e) => {
+            const selectedButton = e.target.querySelector('[selected]') as HTMLElement;
+            if (selectedButton) {
+              const key = selectedButton.getAttribute('data-key');
+              if (key) setStatusFilter(key);
+            }
+          }}
         >
           {STATUS_OPTIONS.map((option) => (
-            <Option key={option.key} value={option.key}>{option.label}</Option>
+            <SegmentedButtonItem key={option.key} data-key={option.key} selected={statusFilter === option.key}>
+              {option.label}
+            </SegmentedButtonItem>
           ))}
-        </Select>
+        </SegmentedButton>
       </FlexBox>
       <Button
         icon={sortOrder === 'asc' ? 'sort-ascending' : 'sort-descending'}
