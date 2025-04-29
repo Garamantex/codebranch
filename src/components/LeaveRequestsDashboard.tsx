@@ -43,18 +43,27 @@ export const LeaveRequestsDashboard: React.FC = () => {
   const [page, setPage] = useState(1);
   const limit = 5;
   const [total, setTotal] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      setError(null);
       try {
         const res = await fetch(`/api/hello?page=${page}&limit=${limit}`);
         const result = await res.json();
-        setLeaveRequests(result.data);
-        setTotal(result.total);
+        if (res.ok) {
+          setLeaveRequests(result.data);
+          setTotal(result.total);
+        } else {
+          setError(result.error || 'Error fetching data');
+          setLeaveRequests([]);
+          setTotal(0);
+        }
       } catch (error) {
         setLeaveRequests([]);
         setTotal(0);
+        setError('Error fetching data');
       } finally {
         setLoading(false);
       }
@@ -62,6 +71,10 @@ export const LeaveRequestsDashboard: React.FC = () => {
     fetchData();
     // eslint-disable-next-line
   }, [page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [statusFilter, sortOrder]);
 
   const handleStatusChange = (id: string, newStatus: 'APPROVED' | 'REJECTED') => {
     setLeaveRequests((prev) =>
@@ -80,6 +93,16 @@ export const LeaveRequestsDashboard: React.FC = () => {
     const dateB = new Date(b.createdAt).getTime();
     return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
   });
+
+  if (error) {
+    return (
+      <FlexBox direction={FlexBoxDirection.Column} style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', background: '#f3f6fa' }}>
+        <Card style={{ padding: 40, background: '#fff', color: '#bb0000', fontWeight: 600, fontSize: 20 }}>
+          {error}
+        </Card>
+      </FlexBox>
+    );
+  }
 
   if (loading) {
     return <BusyIndicator active />;
@@ -130,10 +153,10 @@ export const LeaveRequestsDashboard: React.FC = () => {
             <Button
               design="Transparent"
               icon="nav-back"
-              disabled={page === 1}
+              disabled={page === 1 || loading}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
             >
-              Previous
+              {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Previous'}
             </Button>
             <span style={{ fontWeight: 600, minWidth: 80, textAlign: 'center' }}>
               Page {page} of {Math.ceil(total / limit) || 1}
@@ -141,14 +164,20 @@ export const LeaveRequestsDashboard: React.FC = () => {
             <Button
               design="Transparent"
               icon="nav-forward"
-              disabled={page >= Math.ceil(total / limit)}
+              disabled={page >= Math.ceil(total / limit) || loading}
               onClick={() => setPage((p) => p + 1)}
             >
-              Next
+              {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Next'}
             </Button>
           </FlexBox>
         </div>
       </Card>
+      <style jsx global>{`
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+`}</style>
     </FlexBox>
   );
 }; 
