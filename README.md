@@ -80,6 +80,28 @@ Each component and utility is thoroughly documented following JSDoc conventions:
 - **UI Components**: [@ui5/webcomponents-react](https://sap.github.io/ui5-webcomponents-react/)
 - **Testing**: [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/)
 
+## 🎨 SAPUI5 Components
+
+The dashboard uses the following SAPUI5 Web Components:
+
+- **Layout Components**:
+  - `FlexBox` - For responsive layouts and alignment
+  - `Card` - For content containers and request cards
+  - `Title` - For section headings
+
+- **Interactive Components**:
+  - `Button` - For actions (approve/reject)
+  - `SegmentedButton` - For status filtering
+  - `SegmentedButtonItem` - For individual filter options
+
+- **Utility Components**:
+  - `BusyIndicator` - For loading states
+  - `Icon` - For visual indicators and actions
+
+- **Configuration**:
+  - `ThemeProvider` - For consistent theming
+  - `Configuration` - For global UI5 settings
+
 ## ♿ Accessibility
 
 Accessibility features:
