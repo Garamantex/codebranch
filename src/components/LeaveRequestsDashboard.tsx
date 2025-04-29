@@ -21,12 +21,12 @@ const STATUS_OPTIONS = [
 const statusColor = (status: string) => {
   switch (status) {
     case 'APPROVED':
-      return '#107e3e'; // verde
+      return '#107e3e';
     case 'REJECTED':
-      return '#bb0000'; // rojo
+      return '#bb0000';
     case 'PENDING':
     default:
-      return '#e9730c'; // naranja
+      return '#e9730c';
   }
 };
 
@@ -65,7 +65,6 @@ export const LeaveRequestsDashboard: React.FC = () => {
     };
     fetchData();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // eslint-disable-next-line
   }, [page]);
 
   useEffect(() => {
