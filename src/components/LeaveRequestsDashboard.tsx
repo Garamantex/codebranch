@@ -15,6 +15,7 @@ import {
 } from '@ui5/webcomponents-react';
 import { LeaveRequestCard } from './LeaveRequestCard';
 import { LeaveRequest } from './leave-requests.types';
+import { PaginationControls } from './PaginationControls';
 
 const STATUS_OPTIONS = [
   { key: 'ALL', label: 'All' },
@@ -149,27 +150,13 @@ export const LeaveRequestsDashboard: React.FC = () => {
               onReject={(id) => handleStatusChange(id, 'REJECTED')}
             />
           ))}
-          <FlexBox direction={FlexBoxDirection.Row} style={{ justifyContent: 'center', marginTop: 32, gap: 16, alignItems: 'center' }}>
-            <Button
-              design="Transparent"
-              icon="nav-back"
-              disabled={page === 1 || loading}
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-            >
-              {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Previous'}
-            </Button>
-            <span style={{ fontWeight: 600, minWidth: 80, textAlign: 'center' }}>
-              Page {page} of {Math.ceil(total / limit) || 1}
-            </span>
-            <Button
-              design="Transparent"
-              icon="nav-forward"
-              disabled={page >= Math.ceil(total / limit) || loading}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              {loading ? <span><Icon name="refresh" style={{ marginRight: 4, animation: 'spin 1s linear infinite' }} />Loading...</span> : 'Next'}
-            </Button>
-          </FlexBox>
+          <PaginationControls
+            page={page}
+            total={total}
+            limit={limit}
+            loading={loading}
+            onPageChange={setPage}
+          />
         </div>
       </Card>
       <style jsx global>{`
