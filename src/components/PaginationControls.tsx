@@ -15,7 +15,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({ page, to
     <FlexBox direction={FlexBoxDirection.Row} style={{ justifyContent: 'center', marginTop: 32, gap: 16, alignItems: 'center' }}>
       <Button
         design="Transparent"
-        icon="nav-back"
+        icon="navigation-left-arrow"
         disabled={page === 1 || loading}
         onClick={() => onPageChange(page - 1)}
       >
@@ -26,7 +26,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({ page, to
       </span>
       <Button
         design="Transparent"
-        icon="nav-forward"
+        icon="navigation-right-arrow"
         disabled={page >= totalPages || loading}
         onClick={() => onPageChange(page + 1)}
       >
