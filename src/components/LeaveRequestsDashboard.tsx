@@ -108,7 +108,19 @@ export const LeaveRequestsDashboard: React.FC = () => {
   }
 
   if (loading) {
-    return <BusyIndicator active />;
+    return (
+      <FlexBox
+        direction={FlexBoxDirection.Column}
+        style={{
+          minHeight: '100vh',
+          justifyContent: 'center',
+          alignItems: 'center',
+          background: '#f3f6fa'
+        }}
+      >
+        <BusyIndicator active />
+      </FlexBox>
+    );
   }
 
   return (

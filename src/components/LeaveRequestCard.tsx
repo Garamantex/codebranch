@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, FlexBox, FlexBoxDirection, Button, Icon } from '@ui5/webcomponents-react';
-import { LeaveRequest, LeaveRequestCardProps } from './leave-requests.types';
+import { Card, FlexBox, FlexBoxDirection, Button } from '@ui5/webcomponents-react';
+import { LeaveRequestCardProps } from './leave-requests.types';
 
 const statusColor = (status: string) => {
   switch (status) {
