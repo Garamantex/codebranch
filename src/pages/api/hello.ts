@@ -1,4 +1,9 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+/**
+ * API Route: /api/hello
+ *
+ * Returns a paginated list of leave requests from a mock API.
+ * Supports pagination via ?page=1&limit=10 query parameters.
+ */
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

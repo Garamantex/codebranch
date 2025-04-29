@@ -1,3 +1,10 @@
+/**
+ * LeaveRequestCard.tsx
+ *
+ * Card component for displaying leave request details.
+ * Includes approve and reject actions.
+ * Built with SAPUI5 Web Components and React.
+ */
 import React from 'react';
 import { Card, FlexBox, FlexBoxDirection, Button } from '@ui5/webcomponents-react';
 import { LeaveRequestCardProps } from './leave-requests.types';
