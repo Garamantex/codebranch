@@ -13,17 +13,8 @@ import {
   Title,
   Icon
 } from '@ui5/webcomponents-react';
-
-interface LeaveRequest {
-  id: string;
-  name: string;
-  type_of_leave: string;
-  date_from: string;
-  date_to: string;
-  status: string;
-  reason?: string;
-  createdAt: string;
-}
+import { LeaveRequestCard } from './LeaveRequestCard';
+import { LeaveRequest } from './leave-requests.types';
 
 const STATUS_OPTIONS = [
   { key: 'ALL', label: 'All' },
@@ -49,22 +40,28 @@ export const LeaveRequestsDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [page, setPage] = useState(1);
+  const limit = 5;
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch('https://67f551e6913986b16fa426fd.mockapi.io/api/v1/leave_requests');
-        const data = await res.json();
-        setLeaveRequests(data);
+        const res = await fetch(`/api/hello?page=${page}&limit=${limit}`);
+        const result = await res.json();
+        setLeaveRequests(result.data);
+        setTotal(result.total);
       } catch (error) {
         setLeaveRequests([]);
+        setTotal(0);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+    // eslint-disable-next-line
+  }, [page]);
 
   const handleStatusChange = (id: string, newStatus: 'APPROVED' | 'REJECTED') => {
     setLeaveRequests((prev) =>
@@ -122,62 +119,34 @@ export const LeaveRequestsDashboard: React.FC = () => {
         </FlexBox>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 16, padding: '0 40px 40px 40px' }}>
           {sortedRequests.map((req) => (
-            <Card key={req.id} style={{ boxShadow: '0 2px 12px #0001', borderRadius: 16, padding: '40px 48px', background: '#f9fafb', minWidth: 0 }}>
-              <FlexBox direction={FlexBoxDirection.Row} style={{ flexWrap: 'wrap', gap: 40, alignItems: 'flex-start' }}>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 220, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>Employee Name:</span>
-                  <span>{req.name}</span>
-                </FlexBox>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 180, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>Type of Leave:</span>
-                  <span>{req.type_of_leave}</span>
-                </FlexBox>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 140, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>From:</span>
-                  <span>{new Date(req.date_from).toLocaleDateString()}</span>
-                </FlexBox>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 140, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>To:</span>
-                  <span>{new Date(req.date_to).toLocaleDateString()}</span>
-                </FlexBox>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 120, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>Status:</span>
-                  <span style={{ color: statusColor(req.status), fontWeight: 700, letterSpacing: 1 }}>{req.status}</span>
-                </FlexBox>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 180, maxWidth: 320, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>Reason:</span>
-                  <span style={{ whiteSpace: 'pre-line' }}>{req.reason}</span>
-                </FlexBox>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 140, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>Requested:</span>
-                  <span>{new Date(req.createdAt).toLocaleDateString()}</span>
-                </FlexBox>
-                <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 16, minWidth: 180, alignItems: 'flex-start', marginTop: 12, padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 600, color: '#222' }}>Actions:</span>
-                  <FlexBox direction={FlexBoxDirection.Row} style={{ gap: 12 }}>
-                    <Button
-                      icon="accept"
-                      design="Positive"
-                      disabled={req.status === 'APPROVED'}
-                      onClick={() => handleStatusChange(req.id, 'APPROVED')}
-                      style={{ fontWeight: 600 }}
-                    >
-                      Approve
-                    </Button>
-                    <Button
-                      icon="decline"
-                      design="Negative"
-                      disabled={req.status === 'REJECTED'}
-                      onClick={() => handleStatusChange(req.id, 'REJECTED')}
-                      style={{ fontWeight: 600 }}
-                    >
-                      Reject
-                    </Button>
-                  </FlexBox>
-                </FlexBox>
-              </FlexBox>
-            </Card>
+            <LeaveRequestCard
+              key={req.id}
+              request={req}
+              onApprove={(id) => handleStatusChange(id, 'APPROVED')}
+              onReject={(id) => handleStatusChange(id, 'REJECTED')}
+            />
           ))}
+          <FlexBox direction={FlexBoxDirection.Row} style={{ justifyContent: 'center', marginTop: 32, gap: 16, alignItems: 'center' }}>
+            <Button
+              design="Transparent"
+              icon="nav-back"
+              disabled={page === 1}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+            >
+              Previous
+            </Button>
+            <span style={{ fontWeight: 600, minWidth: 80, textAlign: 'center' }}>
+              Page {page} of {Math.ceil(total / limit) || 1}
+            </span>
+            <Button
+              design="Transparent"
+              icon="nav-forward"
+              disabled={page >= Math.ceil(total / limit)}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              Next
+            </Button>
+          </FlexBox>
         </div>
       </Card>
     </FlexBox>
