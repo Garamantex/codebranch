@@ -16,6 +16,7 @@ import {
 import { LeaveRequestCard } from './LeaveRequestCard';
 import { LeaveRequest } from './leave-requests.types';
 import { PaginationControls } from './PaginationControls';
+import { FiltersBar } from './FiltersBar';
 
 const STATUS_OPTIONS = [
   { key: 'ALL', label: 'All' },
@@ -70,6 +71,7 @@ export const LeaveRequestsDashboard: React.FC = () => {
       }
     };
     fetchData();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     // eslint-disable-next-line
   }, [page]);
 
@@ -117,29 +119,12 @@ export const LeaveRequestsDashboard: React.FC = () => {
       <Card style={{ maxWidth: 1440, width: '100%', padding: 0, boxShadow: '0 4px 24px #0001', background: '#fff' }}>
         <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 24, padding: '32px 40px 0 40px' }}>
           <Title level="H2">Leave Requests Dashboard</Title>
-          <FlexBox direction={FlexBoxDirection.Row} style={{ alignItems: 'center', gap: 24, paddingBottom: 8 }}>
-            <FlexBox direction={FlexBoxDirection.Row} style={{ alignItems: 'center', gap: 8 }}>
-              <Icon name="filter" style={{ color: '#0a6ed1' }} />
-              <span style={{ fontWeight: 500 }}>Filter by Status:</span>
-              <Select
-                onChange={(e: any) => setStatusFilter(e.detail.selectedOption.value)}
-                value={statusFilter}
-                style={{ minWidth: 120 }}
-              >
-                {STATUS_OPTIONS.map((option) => (
-                  <Option key={option.key} value={option.key}>{option.label}</Option>
-                ))}
-              </Select>
-            </FlexBox>
-            <Button
-              icon={sortOrder === 'asc' ? 'sort-ascending' : 'sort-descending'}
-              design="Emphasized"
-              onClick={() => setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
-              style={{ minWidth: 180 }}
-            >
-              Sort by Date Requested
-            </Button>
-          </FlexBox>
+          <FiltersBar
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+          />
         </FlexBox>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 16, padding: '0 40px 40px 40px' }}>
           {sortedRequests.map((req) => (
