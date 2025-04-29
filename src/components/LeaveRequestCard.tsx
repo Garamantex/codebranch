@@ -14,9 +14,24 @@ const statusColor = (status: string) => {
   }
 };
 
-export const LeaveRequestCard: React.FC<LeaveRequestCardProps> = ({ request, onApprove, onReject }) => (
-  <Card style={{ boxShadow: '0 2px 12px #0001', borderRadius: 16, padding: '40px 48px', background: '#f9fafb', minWidth: 0 }}>
-    <FlexBox direction={FlexBoxDirection.Row} style={{ flexWrap: 'wrap', gap: 40, alignItems: 'flex-start' }}>
+export const LeaveRequestCard: React.FC<LeaveRequestCardProps & { className?: string }> = ({ request, onApprove, onReject, className }) => (
+  <Card
+    className={className}
+    style={{
+      boxShadow: '0 2px 12px #0001',
+      borderRadius: 16,
+      padding: '40px 48px',
+      background: '#f9fafb',
+      minWidth: 0,
+      width: '100%',
+      margin: '0 auto',
+    }}
+  >
+    <FlexBox
+      direction={FlexBoxDirection.Row}
+      style={{ flexWrap: 'wrap', gap: 40, alignItems: 'flex-start' }}
+      className="leave-card-content"
+    >
       <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 8, minWidth: 220, padding: '8px 12px' }}>
         <span style={{ fontWeight: 600, color: '#222' }}>Employee Name:</span>
         <span>{request.name}</span>
@@ -69,5 +84,20 @@ export const LeaveRequestCard: React.FC<LeaveRequestCardProps> = ({ request, onA
         </FlexBox>
       </FlexBox>
     </FlexBox>
+    <style jsx global>{`
+      @media (max-width: 900px) {
+        .leave-card-content {
+          flex-direction: column !important;
+          gap: 4px !important;
+        }
+        .ui5-card, .leave-dashboard-card {
+          padding: 12px 2vw !important;
+          max-width: 98vw !important;
+          width: 98vw !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+      }
+    `}</style>
   </Card>
 ); 

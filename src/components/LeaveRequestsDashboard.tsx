@@ -114,40 +114,90 @@ export const LeaveRequestsDashboard: React.FC = () => {
   return (
     <FlexBox
       direction={FlexBoxDirection.Column}
+      className="leave-dashboard-main"
       style={{ minHeight: '100vh', background: '#f3f6fa', justifyContent: 'center', alignItems: 'center', padding: '2rem' }}
     >
       <Card style={{ maxWidth: 1440, width: '100%', padding: 0, boxShadow: '0 4px 24px #0001', background: '#fff' }}>
         <FlexBox direction={FlexBoxDirection.Column} style={{ gap: 24, padding: '32px 40px 0 40px' }}>
           <Title level="H2">Leave Requests Dashboard</Title>
-          <FiltersBar
-            statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-          />
-        </FlexBox>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 16, padding: '0 40px 40px 40px' }}>
-          {sortedRequests.map((req) => (
-            <LeaveRequestCard
-              key={req.id}
-              request={req}
-              onApprove={(id) => handleStatusChange(id, 'APPROVED')}
-              onReject={(id) => handleStatusChange(id, 'REJECTED')}
+          <div className="leave-dashboard-filters">
+            <FiltersBar
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
             />
+          </div>
+        </FlexBox>
+        <div className="leave-dashboard-list" style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 16, padding: '0 40px 40px 40px' }}>
+          {sortedRequests.map((req) => (
+            <div className="leave-dashboard-card" key={req.id}>
+              <LeaveRequestCard
+                request={req}
+                onApprove={(id) => handleStatusChange(id, 'APPROVED')}
+                onReject={(id) => handleStatusChange(id, 'REJECTED')}
+                className="leave-dashboard-card-content"
+              />
+            </div>
           ))}
-          <PaginationControls
-            page={page}
-            total={total}
-            limit={limit}
-            loading={loading}
-            onPageChange={setPage}
-          />
+          <div className="leave-dashboard-pagination">
+            <PaginationControls
+              page={page}
+              total={total}
+              limit={limit}
+              loading={loading}
+              onPageChange={setPage}
+            />
+          </div>
         </div>
       </Card>
       <style jsx global>{`
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+  .leave-dashboard-card {
+    padding: 16px 4vw !important;
+    border-radius: 12px !important;
+    max-width: 98vw !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .leave-dashboard-main {
+    padding: 8px 0 0 0 !important;
+  }
+  .leave-dashboard-list {
+    padding: 0 2vw 16px 2vw !important;
+    gap: 12px !important;
+  }
+  .leave-dashboard-filters {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+    padding-bottom: 12px !important;
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
+  }
+  .leave-dashboard-filters button {
+    width: 100% !important;
+    margin-top: 4px;
+  }
+  .leave-dashboard-pagination {
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-top: 20px !important;
+  }
+  .leave-dashboard-card-content {
+    flex-direction: column !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+    overflow-x: auto;
+  }
+  .leave-dashboard-card-content > div {
+    padding: 4px 0 !important;
+  }
 }
 `}</style>
     </FlexBox>
