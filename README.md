@@ -1,40 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Leave Requests Dashboard
+
+A modern leave request management dashboard built with **Next.js** and **SAPUI5 Web Components** (via `@ui5/webcomponents-react`).
+
+## Features
+- Filter, sort, and paginate leave requests
+- Approve or reject requests with a single click
+- Responsive and accessible UI (a11y)
+- Unit tested with **Vitest** and **React Testing Library**
+- API mock for demo/testing
 
 ## Getting Started
 
-First, run the development server:
-
+Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Testing
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Run all unit tests:
+```bash
+npm test
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Or use the interactive UI:
+```bash
+npm run test:ui
+```
 
-## Learn More
+- Tests are written with [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
+- UI interaction and accessibility are covered.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
+- `src/components/` — Main React components (dashboard, cards, filters, pagination)
+- `src/pages/api/hello.ts` — Mock API for leave requests (supports pagination)
+- `src/ui5.config.ts` — SAPUI5 Web Components global configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Documentation
+- Each main file/component starts with a JSDoc-style header describing its purpose and usage.
+- Follow this convention for new files for clarity and maintainability.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Dependencies
+- **Next.js** — React framework for SSR and routing
+- **@ui5/webcomponents-react** — SAPUI5 Web Components for React
+- **Vitest** — Unit testing
+- **@testing-library/react** — UI testing utilities
 
-## Deploy on Vercel
+## Accessibility
+- The UI is built with accessibility in mind (roles, aria-labels, keyboard navigation)
+- Tests include a11y checks and user interaction
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
