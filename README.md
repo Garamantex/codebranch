@@ -7,8 +7,6 @@
 
 A modern leave request management dashboard built with **Next.js** and **SAPUI5 Web Components** (via `@ui5/webcomponents-react`). Streamline your leave request workflow with an intuitive and accessible interface.
 
-![Dashboard Preview](https://via.placeholder.com/800x400?text=Dashboard+Preview)
-
 ## ✨ Features
 
 - 📋 Filter, sort, and paginate leave requests
@@ -84,7 +82,7 @@ Each component and utility is thoroughly documented following JSDoc conventions:
 
 ## ♿ Accessibility
 
-We take accessibility seriously! Our dashboard features:
+Accessibility features:
 
 - 🎯 ARIA labels and roles
 - ⌨️ Full keyboard navigation
