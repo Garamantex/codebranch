@@ -1,9 +1,13 @@
 /**
- * PaginationControls.tsx
- *
- * Reusable component for paginating lists of leave requests.
- * Provides next/previous navigation and displays current page info.
- * Built with SAPUI5 Web Components and React.
+ * @component PaginationControls
+ * @description Reusable component for paginating lists of leave requests. Provides next/previous navigation and displays current page info.
+ * @param {PaginationControlsProps} props - Component props
+ * @param {number} props.page - Current page number
+ * @param {number} props.total - Total number of items
+ * @param {number} props.limit - Number of items per page
+ * @param {boolean} props.loading - Loading state indicator
+ * @param {(newPage: number) => void} props.onPageChange - Function to handle page changes
+ * @returns {React.FC} A React functional component that renders pagination controls
  */
 import React from 'react';
 import { FlexBox, FlexBoxDirection, Button, Icon } from '@ui5/webcomponents-react';

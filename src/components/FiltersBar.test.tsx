@@ -1,9 +1,21 @@
+/**
+ * @file FiltersBar.test.tsx
+ * @description Test suite for the FiltersBar component
+ * @module FiltersBar.test
+ */
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import { FiltersBar } from './FiltersBar';
 
+/**
+ * @description Test suite for FiltersBar component
+ * Tests the component's filtering and sorting capabilities
+ */
 describe('FiltersBar', () => {
+  /**
+   * @test Tests the status filter selection functionality
+   */
   it('calls setStatusFilter when a status is selected', async () => {
     const setStatusFilter = vi.fn();
     render(

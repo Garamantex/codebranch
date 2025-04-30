@@ -1,9 +1,7 @@
 /**
- * LeaveRequestsDashboard.tsx
- *
- * Main dashboard component for managing leave requests.
- * Features filtering, sorting, pagination, and approval/rejection actions.
- * Built with SAPUI5 Web Components and React.
+ * @component LeaveRequestsDashboard
+ * @description Main dashboard component for managing leave requests. Features filtering, sorting, pagination, and approval/rejection actions.
+ * @returns {React.FC} A React functional component that renders the leave requests dashboard
  */
 import React, { useEffect, useState } from 'react';
 import {

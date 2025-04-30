@@ -1,9 +1,12 @@
 /**
- * FiltersBar.tsx
- *
- * Reusable component for filtering and sorting leave requests.
- * Provides status segmented button and sort order button.
- * Built with SAPUI5 Web Components and React.
+ * @component FiltersBar
+ * @description Reusable component for filtering and sorting leave requests. Provides status segmented button and sort order button.
+ * @param {FiltersBarProps} props - Component props
+ * @param {string} props.statusFilter - Current status filter value
+ * @param {(val: string) => void} props.setStatusFilter - Function to update status filter
+ * @param {'asc' | 'desc'} props.sortOrder - Current sort order
+ * @param {(val: 'asc' | 'desc') => void} props.setSortOrder - Function to update sort order
+ * @returns {React.FC} A React functional component that renders the filters bar
  */
 import React from 'react';
 import { FlexBox, FlexBoxDirection, SegmentedButton, SegmentedButtonItem, Button, Icon } from '@ui5/webcomponents-react';

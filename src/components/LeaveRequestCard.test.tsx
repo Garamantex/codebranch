@@ -1,8 +1,17 @@
+/**
+ * @file LeaveRequestCard.test.tsx
+ * @description Test suite for the LeaveRequestCard component
+ * @module LeaveRequestCard.test
+ */
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import { LeaveRequestCard } from './LeaveRequestCard';
 
+/**
+ * @description Test suite for LeaveRequestCard component
+ * Tests the component's rendering and interaction capabilities
+ */
 describe('LeaveRequestCard', () => {
   const request = {
     id: '1',
@@ -15,6 +24,9 @@ describe('LeaveRequestCard', () => {
     reason: '',
   };
 
+  /**
+   * @test Tests the approve and reject button click handlers
+   */
   it('calls onApprove and onReject when buttons are clicked', async () => {
     const onApprove = vi.fn();
     const onReject = vi.fn();
