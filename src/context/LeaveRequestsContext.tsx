@@ -57,13 +57,11 @@ export const LeaveRequestsProvider: React.FC<LeaveRequestsProviderProps> = ({ ch
    * @param newRequests - Array of new requests from the API
    */
   const handleNewRequests = (newRequests: LeaveRequest[]) => {
-    // Update history with new requests
     const updatedHistory = { ...requestHistory };
     newRequests.forEach(request => {
       updatedHistory[request.id] = request;
     });
 
-    // Apply local changes to the history
     Object.entries(localChanges).forEach(([id, status]) => {
       if (updatedHistory[id]) {
         updatedHistory[id] = { ...updatedHistory[id], status };
@@ -71,10 +69,7 @@ export const LeaveRequestsProvider: React.FC<LeaveRequestsProviderProps> = ({ ch
     });
 
     setRequestHistory(updatedHistory);
-
-    // Update visible requests
-    const visibleRequests = Object.values(updatedHistory);
-    setAllRequests(visibleRequests);
+    setAllRequests(Object.values(updatedHistory));
   };
 
   return (

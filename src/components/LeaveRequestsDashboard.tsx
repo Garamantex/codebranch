@@ -14,30 +14,10 @@ import {
   BusyIndicator,
 } from '@ui5/webcomponents-react';
 import { LeaveRequestCard } from './LeaveRequestCard';
-import { LeaveRequest } from './leave-requests.types';
 import { PaginationControls } from './PaginationControls';
 import { FiltersBar } from './FiltersBar';
-import '@/styles/leave-requests.css';
 import { useLeaveRequests } from '@/context/LeaveRequestsContext';
-
-const STATUS_OPTIONS = [
-  { key: 'ALL', label: 'All' },
-  { key: 'PENDING', label: 'Pending' },
-  { key: 'APPROVED', label: 'Approved' },
-  { key: 'REJECTED', label: 'Rejected' }
-];
-
-const statusColor = (status: string) => {
-  switch (status) {
-    case 'APPROVED':
-      return '#107e3e';
-    case 'REJECTED':
-      return '#bb0000';
-    case 'PENDING':
-    default:
-      return '#e9730c';
-  }
-};
+import '@/styles/leave-requests.css';
 
 export const LeaveRequestsDashboard: React.FC = () => {
   const { allRequests, setAllRequests, updateRequestStatus, localChanges } = useLeaveRequests();
