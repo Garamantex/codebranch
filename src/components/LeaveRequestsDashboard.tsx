@@ -83,6 +83,11 @@ export const LeaveRequestsDashboard: React.FC = () => {
         req.id === id ? { ...req, status: newStatus } : req
       )
     );
+
+    if (statusFilter !== 'ALL' && statusFilter !== newStatus) {
+      setLeaveRequests((prev) => prev.filter((req) => req.id !== id));
+    }
+
     setPage(1);
   };
 
