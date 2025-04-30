@@ -16,6 +16,7 @@ import { LeaveRequest } from './leave-requests.types';
 import { PaginationControls } from './PaginationControls';
 import { FiltersBar } from './FiltersBar';
 import '@/styles/leave-requests.css';
+import { useLeaveRequests } from '@/context/LeaveRequestsContext';
 
 const STATUS_OPTIONS = [
   { key: 'ALL', label: 'All' },
@@ -37,13 +38,12 @@ const statusColor = (status: string) => {
 };
 
 export const LeaveRequestsDashboard: React.FC = () => {
-  const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([]);
+  const { allRequests, setAllRequests, updateRequestStatus, localChanges } = useLeaveRequests();
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState(1);
   const limit = 5;
-  const [total, setTotal] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -51,51 +51,49 @@ export const LeaveRequestsDashboard: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`/api/hello?page=${page}&limit=${limit}&status=${statusFilter}`);
+        const res = await fetch('/api/hello');
         const result = await res.json();
         if (res.ok) {
-          setLeaveRequests(result.data);
-          setTotal(result.total);
+          setAllRequests(result.data);
         } else {
           setError(result.error || 'Error fetching data');
-          setLeaveRequests([]);
-          setTotal(0);
+          setAllRequests([]);
         }
       } catch (error) {
-        setLeaveRequests([]);
-        setTotal(0);
+        setAllRequests([]);
         setError('Error fetching data');
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [page, statusFilter]);
+  }, []);
 
   useEffect(() => {
     setPage(1);
   }, [statusFilter, sortOrder]);
 
   const handleStatusChange = (id: string, newStatus: 'APPROVED' | 'REJECTED') => {
-    setLeaveRequests((prev) =>
-      prev.map((req) =>
-        req.id === id ? { ...req, status: newStatus } : req
-      )
-    );
-
-    if (statusFilter !== 'ALL' && statusFilter !== newStatus) {
-      setLeaveRequests((prev) => prev.filter((req) => req.id !== id));
-    }
-
-    setPage(1);
+    updateRequestStatus(id, newStatus);
   };
 
-  const sortedRequests = [...leaveRequests].sort((a, b) => {
+  const filteredRequests = allRequests.filter(request => {
+    if (statusFilter === 'ALL') return true;
+    const currentStatus = localChanges[request.id] || request.status;
+    return currentStatus === statusFilter;
+  });
+
+  const sortedRequests = [...filteredRequests].sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
     return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
   });
+
+  const start = (page - 1) * limit;
+  const end = start + limit;
+  const paginatedRequests = sortedRequests.slice(start, end);
+
+  const total = filteredRequests.length;
 
   if (error) {
     return (
@@ -141,7 +139,7 @@ export const LeaveRequestsDashboard: React.FC = () => {
           </div>
         </FlexBox>
         <div className="leave-dashboard-list" role="region" aria-label="Leave Requests List">
-          {sortedRequests.map((req) => (
+          {paginatedRequests.map((req) => (
             <div className="leave-dashboard-card" key={req.id} role="listitem" aria-label={`Leave request for ${req.name}`}>
               <LeaveRequestCard
                 request={req}
