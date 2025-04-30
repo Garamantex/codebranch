@@ -1,6 +1,8 @@
 /**
  * @component LeaveRequestsDashboard
- * @description Main dashboard component for managing leave requests. Features filtering, sorting, pagination, and approval/rejection actions.
+ * @description Main dashboard component for managing leave requests. Features filtering, sorting, and pagination.
+ * All data operations (filtering, sorting, pagination) are handled on the client side.
+ * Uses a global context to maintain request state and local changes.
  * @returns {React.FC} A React functional component that renders the leave requests dashboard
  */
 import React, { useEffect, useState } from 'react';
@@ -46,6 +48,7 @@ export const LeaveRequestsDashboard: React.FC = () => {
   const limit = 5;
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch all requests once when component mounts
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -69,6 +72,7 @@ export const LeaveRequestsDashboard: React.FC = () => {
     fetchData();
   }, []);
 
+  // Reset to first page when filter or sort changes
   useEffect(() => {
     setPage(1);
   }, [statusFilter, sortOrder]);
@@ -77,18 +81,21 @@ export const LeaveRequestsDashboard: React.FC = () => {
     updateRequestStatus(id, newStatus);
   };
 
+  // Filter requests based on current status (including local changes)
   const filteredRequests = allRequests.filter(request => {
     if (statusFilter === 'ALL') return true;
     const currentStatus = localChanges[request.id] || request.status;
     return currentStatus === statusFilter;
   });
 
+  // Sort filtered requests
   const sortedRequests = [...filteredRequests].sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
     return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
   });
 
+  // Apply pagination to sorted requests
   const start = (page - 1) * limit;
   const end = start + limit;
   const paginatedRequests = sortedRequests.slice(start, end);

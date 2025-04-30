@@ -2,7 +2,8 @@
  * API Route: /api/hello
  *
  * Returns all leave requests from a mock API.
- * Sorts requests by status (APPROVED/REJECTED first) and then by creation date.
+ * The data is sorted by status (APPROVED/REJECTED first) and then by creation date.
+ * Pagination is handled on the client side.
  */
 import type { NextApiRequest, NextApiResponse } from "next";
 
