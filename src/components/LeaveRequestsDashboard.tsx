@@ -51,7 +51,7 @@ export const LeaveRequestsDashboard: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`/api/hello?page=${page}&limit=${limit}`);
+        const res = await fetch(`/api/hello?page=${page}&limit=${limit}&status=${statusFilter}`);
         const result = await res.json();
         if (res.ok) {
           setLeaveRequests(result.data);
@@ -71,7 +71,7 @@ export const LeaveRequestsDashboard: React.FC = () => {
     };
     fetchData();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [page]);
+  }, [page, statusFilter]);
 
   useEffect(() => {
     setPage(1);
@@ -83,13 +83,10 @@ export const LeaveRequestsDashboard: React.FC = () => {
         req.id === id ? { ...req, status: newStatus } : req
       )
     );
+    setPage(1);
   };
 
-  const filteredRequests = statusFilter === 'ALL'
-    ? leaveRequests
-    : leaveRequests.filter((req) => req.status === statusFilter);
-
-  const sortedRequests = [...filteredRequests].sort((a, b) => {
+  const sortedRequests = [...leaveRequests].sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
     return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
