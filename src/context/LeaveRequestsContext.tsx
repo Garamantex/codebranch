@@ -4,17 +4,13 @@
  * Maintains a complete history of all requests and their local changes.
  * Handles request status updates and data consolidation.
  */
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { LeaveRequest } from '../components/leave-requests.types';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { LeaveRequest, LeaveRequestsContextType, LeaveRequestsProviderProps } from '../components/leave-requests.types';
 
-interface LeaveRequestsContextType {
-  allRequests: LeaveRequest[];
-  setAllRequests: (requests: LeaveRequest[]) => void;
-  updateRequestStatus: (id: string, status: 'APPROVED' | 'REJECTED') => void;
-  localChanges: Record<string, 'APPROVED' | 'REJECTED'>;
-  requestHistory: Record<string, LeaveRequest>;
-}
-
+/**
+ * @description Global context for managing leave requests state
+ * Maintains a complete history of all requests and their local changes
+ */
 const LeaveRequestsContext = createContext<LeaveRequestsContextType | undefined>(undefined);
 
 export const useLeaveRequests = () => {
@@ -24,10 +20,6 @@ export const useLeaveRequests = () => {
   }
   return context;
 };
-
-interface LeaveRequestsProviderProps {
-  children: ReactNode;
-}
 
 export const LeaveRequestsProvider: React.FC<LeaveRequestsProviderProps> = ({ children }) => {
   const [allRequests, setAllRequests] = useState<LeaveRequest[]>([]);
@@ -39,49 +31,27 @@ export const LeaveRequestsProvider: React.FC<LeaveRequestsProviderProps> = ({ ch
    * @param id - The ID of the request to update
    * @param status - The new status (APPROVED or REJECTED)
    */
-  const updateRequestStatus = (id: string, status: 'APPROVED' | 'REJECTED') => {
+  const updateRequestStatus = useCallback((id: string, status: 'APPROVED' | 'REJECTED') => {
     setLocalChanges(prev => ({ ...prev, [id]: status }));
-    setAllRequests(prev =>
-      prev.map(request =>
-        request.id === id ? { ...request, status } : request
-      )
-    );
+    setAllRequests(prev => prev.map(request => 
+      request.id === id ? { ...request, status } : request
+    ));
     setRequestHistory(prev => ({
       ...prev,
       [id]: { ...prev[id], status }
     }));
-  };
+  }, []);
 
-  /**
-   * Handles new requests from the API and consolidates them with existing data
-   * @param newRequests - Array of new requests from the API
-   */
-  const handleNewRequests = (newRequests: LeaveRequest[]) => {
-    const updatedHistory = { ...requestHistory };
-    newRequests.forEach(request => {
-      updatedHistory[request.id] = request;
-    });
-
-    Object.entries(localChanges).forEach(([id, status]) => {
-      if (updatedHistory[id]) {
-        updatedHistory[id] = { ...updatedHistory[id], status };
-      }
-    });
-
-    setRequestHistory(updatedHistory);
-    setAllRequests(Object.values(updatedHistory));
+  const value = {
+    allRequests,
+    setAllRequests,
+    updateRequestStatus,
+    localChanges,
+    requestHistory
   };
 
   return (
-    <LeaveRequestsContext.Provider 
-      value={{ 
-        allRequests, 
-        setAllRequests: handleNewRequests, 
-        updateRequestStatus,
-        localChanges,
-        requestHistory
-      }}
-    >
+    <LeaveRequestsContext.Provider value={value}>
       {children}
     </LeaveRequestsContext.Provider>
   );

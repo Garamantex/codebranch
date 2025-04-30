@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 /**
  * @interface LeaveRequest
  * @description Represents a leave request with all its properties
@@ -32,4 +34,30 @@ export interface LeaveRequestCardProps {
   request: LeaveRequest;
   onApprove: (id: string) => void;
   onReject: (id: string) => void;
+}
+
+/**
+ * @interface LeaveRequestsContextType
+ * @description Interface for the LeaveRequests context
+ * @property {LeaveRequest[]} allRequests - Array of all leave requests
+ * @property {(requests: LeaveRequest[]) => void} setAllRequests - Function to update all requests
+ * @property {(id: string, status: 'APPROVED' | 'REJECTED') => void} updateRequestStatus - Function to update request status
+ * @property {Record<string, 'APPROVED' | 'REJECTED'>} localChanges - Record of local status changes
+ * @property {Record<string, LeaveRequest>} requestHistory - Complete history of all requests
+ */
+export interface LeaveRequestsContextType {
+  allRequests: LeaveRequest[];
+  setAllRequests: (requests: LeaveRequest[]) => void;
+  updateRequestStatus: (id: string, status: 'APPROVED' | 'REJECTED') => void;
+  localChanges: Record<string, 'APPROVED' | 'REJECTED'>;
+  requestHistory: Record<string, LeaveRequest>;
+}
+
+/**
+ * @interface LeaveRequestsProviderProps
+ * @description Props interface for the LeaveRequestsProvider component
+ * @property {ReactNode} children - Child components to be wrapped by the provider
+ */
+export interface LeaveRequestsProviderProps {
+  children: ReactNode;
 } 
