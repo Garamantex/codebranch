@@ -57,6 +57,8 @@ npm run test:ui
 ```
 src/
 ├── components/     # Main React components
+│   └── FiltersBar/ # Componente de filtros con sus tests
+├── context/        # Contexto de la aplicación
 ├── pages/
 │   └── api/       # Mock API endpoints
 └── ui5.config.ts  # SAPUI5 configuration
@@ -73,6 +75,10 @@ Each component and utility is thoroughly documented following JSDoc conventions:
  * @param {PropType} propName - Prop description
  */
 ```
+
+### Testing
+
+Los tests de los componentes, como `FiltersBar`, se encuentran en archivos con el sufijo `.test.tsx` dentro de la carpeta del componente correspondiente.
 
 ## 🛠️ Tech Stack
 
